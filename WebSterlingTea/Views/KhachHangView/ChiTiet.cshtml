@@ -1,0 +1,86 @@
+﻿﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h2>Thông Tin Khach Hàng</h2>
+
+<div id="detailKhachHangForm">
+    <div class="form-group">
+        <label for="Tt">TT</label>
+        <input type="text" id="Tt" name="Tt" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Cccd">CCCD</label>
+        <input type="text" id="Cccd" name="Cccd" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Khach_Hang">Khách Hàng</label>
+        <input type="text" id="KhachHang" name="KhachHang" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Dien_Thoai">Số Điện Thoại</label>
+        <input type="text" id="Dien_Thoai" name="Dien_Thoai" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="text" id="Email" name="Email" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <label for="So_Ban">Số Bàn</label>
+        <input type="number" id="So_Ban" name="So_Ban" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Coc">Cọc</label>
+        <input type="number" id="Diem_tichluy" name="Diem_tichluy" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const pathArray = window.location.pathname.split('/');
+        const tt = pathArray[pathArray.length - 1];
+
+        // Check if 'tt' is correctly retrieved
+        if (!tt) {
+            console.error('Error: Missing or invalid "tt" parameter in URL');
+            return;
+        }
+
+        fetch(`/api/KhachHang/${tt}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('Tt').value = data.Tt;
+                document.getElementById('Cccd').value = data.Cccd;
+                document.getElementById('KhachHang').value = data.KhachHang;
+                document.getElementById('Dien_Thoai').value = data.Dien_Thoai;
+                document.getElementById('Email').value = data.Email;
+                document.getElementById('So_Ban').value = data.So_Ban;
+                document.getElementById('Coc').value = data.Coc;
+                console.log('Success:', data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    });
+</script>

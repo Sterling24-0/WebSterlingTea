@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h2>Thêm mới Khách hàng</h2>
+
+<div id="addKhachHangForm">
+    <div class="form-group">
+        <label for="Tt">TT</label>
+        <input type="text" id="Tt" name="Tt" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Cccd">CCCD</label>
+        <input type="text" id="Cccd" name="Cccd" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Khach_Hang">Khách Hàng</label>
+        <input type="text" id="Khach_Hang" name="Khach_Hang" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Dien_Thoai">Số Điện Thoại</label>
+        <input type="text" id="Dien_Thoai" name="Dien_Thoai" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Email">Email</label>
+        <input type="text" id="Email" name="Email" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="So_Ban">Số Bàn Đặt</label>
+        <input type="email" id="So_Ban" name="So_Ban" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="Coc">Điện thoại</label>
+        <input type="text" id="Coc" name="Coc" class="form-control" required>
+        <span class="text-danger"></span>
+    </div>
+    <button type="button" onclick="submitKhachHang()" class="btn btn-primary">Lưu</button>
+    <button type="button" onclick="closeForm()" class="btn btn-secondary">Hủy</button>
+</div>
+
+<script>
+    function closeForm() {
+        // document.getElementById('addSinhVienForm').style.display = 'none';
+        window.location.href = '/ViewKhachHang/Index';
+    }
+
+    function submitSinhVien() {
+        const tt = document.getElementById('Tt').value;
+        const cccd = document.getElementById('Cccd').value;
+        const khach_hang= document.getElementById('Khach_Hang').value;
+        const dien_thoai = document.getElementById('Dien_Thoai').value;
+        const email= document.getElementById('Email').value;
+        const so_ban = document.getElementById('So_Ban').value;
+        const coc = document.getElementById('Coc').value;
+
+        const sv = {
+            Tt: tt,
+            Cccd: cccd,
+            Khach_Hang: khach_hang,
+            Dien_Thoai: dien_thoai,
+            Email: email,
+            so_ban: so_ban,
+            Coc: coc,
+
+        };
+
+        fetch('/api/KhachHang', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sv)
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert('Khach Hang added successfully!');
+                console.log('Success:', data);
+                window.location.href = '/ViewKhachHang/Index'; // Redirect to index page after successful submission
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }
+</script>
